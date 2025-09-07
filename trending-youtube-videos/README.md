@@ -32,3 +32,7 @@ EDIT: Now includes data from RU, MX, KR, JP and IN regions (Russia, Mexico, Sout
 - Merge the `categories_df` into the `videos_df` on `category_id` and `country_cd`.
 - Rename columns `snippet_title` to `category_title`, `snippet_assignable` to `category_assignable`.
 - Write the cleaned dataframe to `working/videos_cleaned.csv`
+
+## Notebooks
+
+- [Data Ingestion](./01_processing_notebook.ipynb)
