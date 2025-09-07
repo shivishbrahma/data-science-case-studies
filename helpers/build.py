@@ -62,6 +62,8 @@ if __name__ == "__main__":
                     md = f.read()
                     html = markdown.markdown(md)
                     html = html.replace(".ipynb", ".html")
+
+                html_path.parent.mkdir(parents=True, exist_ok=True)
                 with html_path.open("w", encoding="utf-8") as f:
                     f.write(html)
                 print(f"Converted {filename} to {html_path}")
