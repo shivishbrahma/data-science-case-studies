@@ -7,6 +7,9 @@ from nbconvert import HTMLExporter
 from traitlets.config import Config
 import markdown
 import shutil
+from jinja2 import Environment, FileSystemLoader
+from bs4 import BeautifulSoup
+import datetime
 
 
 def clear_outputs(nb):
@@ -34,10 +37,66 @@ def convert_notebook(nb_path: Path, out_path: Path, clear_output: bool = False):
     return out_path
 
 
+def get_title(html: str):
+    soup = BeautifulSoup(html, "html.parser")
+    h1 = soup.find("h1")
+    if h1 is None:
+        return "Data Science Case Studies"
+    return h1.text
+
+
+def url_for(endpoint, **params):
+    """
+    Simple URL builder.
+
+    Given an endpoint (e.g. route key, path name), and keyword arguments,
+    returns a URL string.
+
+    Example:
+        url_for("static", filename="style.css") -> "/static/style.css"
+
+    Raises:
+        KeyError: if endpoint is unknown
+    """
+
+    routes = {
+        "static": "/static/{filename}",
+    }
+    tmpl = routes.get(endpoint)
+    if tmpl is None:
+        raise KeyError(f"unknown endpoint: {endpoint}")
+    return tmpl.format(**params)
+
+
+def breadcrumb_builder(path: str, navlinks: dict):
+    breadcrumbs = []
+    cur_path = ""
+    for part in path.split(os.sep):
+        cur_path += f"{part}/".replace(".", "")
+        breadcrumbs.append(
+            {
+                "url": cur_path,
+                "name": navlinks[cur_path],
+            }
+        )
+    return breadcrumbs
+
+
 if __name__ == "__main__":
+    env = Environment(loader=FileSystemLoader("templates"))
+    env.globals["url_for"] = url_for
+    env.globals["year"] = datetime.datetime.now().year
+
+    markdown_template = env.get_template("markdown.j2")
+
+    navlinks = {}
+
     if os.path.exists("build"):
         shutil.rmtree("build")
     os.makedirs("build")
+
+    # Copy static folder into build folder
+    shutil.copytree("static", "build/static")
 
     # Iterate recursively over project directory
     for root, _, filenames in os.walk("."):
@@ -53,6 +112,22 @@ if __name__ == "__main__":
 
                 md_path = Path(os.path.join(root, filename))
                 if filename == "README.md":
+                    if root == ".":
+                        nav_name = "Home"
+                        nav_link = "/"
+                    else:
+                        nav_name = (
+                            os.path.basename(root)
+                            .replace(".", "")
+                            .replace(os.sep, "/")
+                            .replace("-", " ")
+                            .title()
+                        )[:15] + "..."
+                        nav_link = root.replace(".", "").replace(os.sep, "/") + "/"
+
+                    navlinks[nav_link] = nav_name
+                    breadcrumb_path = breadcrumb_builder(root, navlinks)
+
                     html_path = Path(os.path.join("build", root, "index.html"))
                 else:
                     html_path = Path(
@@ -62,6 +137,8 @@ if __name__ == "__main__":
                     md = f.read()
                     html = markdown.markdown(md)
                     html = html.replace(".ipynb", ".html")
+                    title = get_title(html)
+                    html = markdown_template.render(body=html, title=title, breadcrumbs=breadcrumb_path)
 
                 html_path.parent.mkdir(parents=True, exist_ok=True)
                 with html_path.open("w", encoding="utf-8") as f:
