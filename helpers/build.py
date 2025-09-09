@@ -61,7 +61,7 @@ def url_for(endpoint, **params):
     """
 
     routes = {
-        "static": BASE_URL + "{}/static/{filename}",
+        "static": BASE_URL + "/static/{filename}",
     }
     tmpl = routes.get(endpoint)
     if tmpl is None:
