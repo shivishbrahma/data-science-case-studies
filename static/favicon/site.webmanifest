@@ -1,17 +1,17 @@
 {
     "name": "Data Science Case Studies",
     "short_name": "DS Cases",
-    "start_url": "/",
+    "start_url": "/data-science-case-studies",
     "lang": "en-IN",
     "description": "A collection of data science case studies and projects.",
     "icons": [
         {
-            "src": "/static/favicon/android-chrome-192x192.png",
+            "src": "/data-science-case-studies/static/favicon/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/static/favicon/android-chrome-512x512.png",
+            "src": "/data-science-case-studies/static/favicon/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         }

@@ -76,7 +76,7 @@ def breadcrumb_builder(path: str, navlinks: dict):
         cur_path += f"{part}/".replace(".", "")
         breadcrumbs.append(
             {
-                "url": cur_path,
+                "url": BASE_URL.rstrip("/") + cur_path,
                 "name": navlinks[cur_path],
             }
         )
@@ -87,6 +87,7 @@ if __name__ == "__main__":
     env = Environment(loader=FileSystemLoader("templates"))
     env.globals["url_for"] = url_for
     env.globals["year"] = datetime.datetime.now().year
+    env.globals["base_url"] = BASE_URL
 
     markdown_template = env.get_template("markdown.j2")
 
