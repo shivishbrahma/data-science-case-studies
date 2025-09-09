@@ -11,6 +11,7 @@ from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
 import datetime
 
+BASE_URL = "/data-science-case-studies"
 
 def clear_outputs(nb):
     for cell in nb.cells:
@@ -60,7 +61,7 @@ def url_for(endpoint, **params):
     """
 
     routes = {
-        "static": "/static/{filename}",
+        "static": "{}/static/{filename}".format(BASE_URL),
     }
     tmpl = routes.get(endpoint)
     if tmpl is None:
