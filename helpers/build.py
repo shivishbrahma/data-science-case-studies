@@ -76,7 +76,7 @@ def breadcrumb_builder(path: str, navlinks: dict):
         cur_path += f"{part}/".replace(".", "")
         breadcrumbs.append(
             {
-                "url": BASE_URL + cur_path,
+                "url": BASE_URL.rstrip("/") + cur_path,
                 "name": navlinks[cur_path],
             }
         )
