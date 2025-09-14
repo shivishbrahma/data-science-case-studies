@@ -18,6 +18,14 @@ Data is included for the US, GB, DE, CA, and FR regions (USA, Great Britain, Ger
 
 EDIT: Now includes data from RU, MX, KR, JP and IN regions (Russia, Mexico, South Korea, Japan and India respectively) over the same time period.
 
+Each region’s data is in a separate file. Data includes the video title, channel title, publish time, tags, views, likes and dislikes, description, and comment count.
+
+The data also includes a `category_id` field, which varies between regions. To retrieve the categories for a specific video, find it in the associated `JSON`. One such file is included for each of the five regions in the dataset.
+
+### Citation
+
+Mitchell J. (November 30, 2018). Trending YouTube Video Statistics, Version 1. Retrieved September 6, 2025 from https://www.kaggle.com/datasets/datasnaek/youtube-new/version/1.
+
 ## Data Preparation
 
 - Merge `input/youtube-new/**videos.csv` into a single dataframe (videos_df).

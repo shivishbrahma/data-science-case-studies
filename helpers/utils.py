@@ -1,6 +1,12 @@
 import pandas as pd
 import numpy as np
 from IPython.display import display_markdown
+import os
+import shutil
+import subprocess
+from pathlib import Path
+import zipfile
+import kaggle
 
 
 def check_numeric_value(dtype: str):
@@ -56,3 +62,47 @@ def dataframe_summary(df: pd.DataFrame):
 """,
         raw=True,
     )
+
+
+def download_from_kaggle(username: str, dataset_name: str, overwrite=False):
+    """
+    Download a dataset from Kaggle and extract it to a specified directory.
+    :param username: The username of the Kaggle user who owns the dataset.
+    :param dataset_name: The name of the dataset to download.
+    :param overwrite: Whether to overwrite an existing dataset directory.
+    """
+    # install kaggle api and set the credentials
+    dst = os.path.join(os.path.expanduser("~"), ".kaggle")
+    cred_filename = "kaggle.json"
+    cwd = Path(os.path.dirname(os.path.abspath(__file__))).parent
+    print("Setting the base path to:", cwd)
+
+    input_dir = cwd / "input"
+    dataset_dir = input_dir / dataset_name
+
+    if os.path.exists(dataset_dir) and not overwrite:
+        print("Dataset already downloaded and extracted to:", dataset_dir)
+        return dataset_dir
+
+    # copy credentials to ~/.kaggle
+    if not os.path.exists(os.path.join(dst, cred_filename)):
+        os.makedirs(dst, exist_ok=True)
+        shutil.copy(cred_filename, os.path.join(dst, cred_filename))
+
+    # returns 0 on success
+    kaggle.api.dataset_download_files(
+        dataset=f"{username}/{dataset_name}",
+        path=str(dataset_dir),
+        unzip=True,
+    )
+
+    print("Downloaded and extracted to:", dataset_dir)
+    return dataset_dir
+
+
+def get_working_dir(dataset_name: str):
+    cwd = Path(os.path.dirname(os.path.abspath(__file__))).parent
+    print("Setting the base path to:", cwd)
+    working_dir = cwd / "working" / dataset_name
+    os.makedirs(working_dir, exist_ok=True)
+    return working_dir
