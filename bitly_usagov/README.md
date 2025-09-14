@@ -1,7 +1,7 @@
 # Bitly Data from 1.USA.gov
 
 ## Use Cases
-
+This dataset is used to analyze user data from the 1.USA.gov URL shortening service. The analysis, as demonstrated in the accompanying notebook, focuses on counting time zones from the user data to understand the geographic distribution of users.
 
 
 ### Citation
