@@ -6,6 +6,7 @@ import shutil
 import subprocess
 from pathlib import Path
 import zipfile
+import kaggle
 
 
 def check_numeric_value(dtype: str):
@@ -77,7 +78,6 @@ def download_from_kaggle(username: str, dataset_name: str, overwrite=False):
     print("Setting the base path to:", cwd)
 
     input_dir = cwd / "input"
-    zip_path = input_dir / f"{dataset_name}.zip"
     dataset_dir = input_dir / dataset_name
 
     if os.path.exists(dataset_dir) and not overwrite:
@@ -89,46 +89,16 @@ def download_from_kaggle(username: str, dataset_name: str, overwrite=False):
         os.makedirs(dst, exist_ok=True)
         shutil.copy(cred_filename, os.path.join(dst, cred_filename))
 
-    # download dataset via kaggle CLI (requires kaggle.json in ~/.kaggle and kaggle installed)
-    if os.path.exists(zip_path) and overwrite:
-        os.remove(zip_path)
-
-    if not os.path.exists(zip_path):
-        # returns 0 on success
-        ret = subprocess.run(
-            [
-                "kaggle",
-                "datasets",
-                "download",
-                "-d",
-                "{}/{}".format(username, dataset_name),
-                "-p",
-                "./input",
-            ],
-            check=False,
-            capture_output=True,
-        )
-        if ret.returncode != 0:
-            raise RuntimeError(
-                "kaggle download failed (ensure kaggle is installed and authenticated)"
-            )
-        else:
-            print(ret.stdout.decode("utf-8"))
-    else:
-        print("Dataset already downloaded to:", zip_path)
-
-    input_dir.mkdir(parents=True, exist_ok=True)
-    dataset_dir.mkdir(parents=True, exist_ok=True)
-
-    # move the zip into input/ (overwrite if exists)
-    shutil.move(str(zip_path), str(input_dir / zip_path.name))
-
-    # unzip into input/youtube-new
-    with zipfile.ZipFile(input_dir / zip_path.name, "r") as z:
-        z.extractall(path=dataset_dir)
+    # returns 0 on success
+    kaggle.api.dataset_download_files(
+        dataset=f"{username}/{dataset_name}",
+        path=str(dataset_dir),
+        unzip=True,
+    )
 
     print("Downloaded and extracted to:", dataset_dir)
     return dataset_dir
+
 
 def get_working_dir(dataset_name: str):
     cwd = Path(os.path.dirname(os.path.abspath(__file__))).parent
