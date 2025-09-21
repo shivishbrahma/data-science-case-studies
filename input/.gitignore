@@ -3,4 +3,4 @@
 *.json
 *.txt
 *.dat
-README*
+*README*
