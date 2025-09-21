@@ -24,7 +24,7 @@ The data also includes a `category_id` field, which varies between regions. To r
 
 ### Citation
 
-Mitchell J. (November 30, 2018). Trending YouTube Video Statistics, Version 1. Retrieved September 6, 2025 from https://www.kaggle.com/datasets/datasnaek/youtube-new/version/1.
+Mitchell J. (November 30, 2018). Trending YouTube Video Statistics, Version 1. Retrieved September 6, 2025 from [https://www.kaggle.com/datasets/datasnaek/youtube-new/version/1](https://www.kaggle.com/datasets/datasnaek/youtube-new/version/1).
 
 ## Data Preparation
 
