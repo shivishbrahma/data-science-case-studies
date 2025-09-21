@@ -7,6 +7,7 @@ import subprocess
 from pathlib import Path
 import zipfile
 import kaggle
+import urllib.request
 
 
 def check_numeric_value(dtype: str):
@@ -106,3 +107,37 @@ def get_working_dir(dataset_name: str):
     working_dir = cwd / "working" / dataset_name
     os.makedirs(working_dir, exist_ok=True)
     return working_dir
+
+
+def download_by_url(url: str, filename: str, unzip=False, overwrite=False, chunk_size=1024):
+    """
+    Download a file from a given URL and save it to a specified filename.
+    :param url: The URL of the file to download.
+    :param filename: The name of the file to save the downloaded content to.
+    """
+    dirname = os.path.dirname(filename)
+    if not os.path.exists(dirname):
+        os.makedirs(dirname)
+
+    if os.path.exists(filename) and not overwrite:
+        print("File already downloaded to:", filename)
+        return
+
+    # download file using urlib and stream mode
+    try:
+        with urllib.request.urlopen(url) as response, open(filename, 'wb') as out_file:
+            while True:
+                chunk = response.read(chunk_size)
+                if not chunk:
+                    break
+                out_file.write(chunk)
+        print(f"✅ Download complete: {filename}")
+    except Exception as e:
+        print(f"❌ Error downloading file: {e}")
+
+    if unzip:
+        with zipfile.ZipFile(filename, "r") as zip_ref:
+            zip_ref.extractall(dirname)
+        os.remove(filename)
+
+    return dirname
