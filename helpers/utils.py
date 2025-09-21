@@ -8,6 +8,7 @@ from pathlib import Path
 import zipfile
 import kaggle
 import urllib.request
+import urllib.error
 
 
 def check_numeric_value(dtype: str):
@@ -114,30 +115,37 @@ def download_by_url(url: str, filename: str, unzip=False, overwrite=False, chunk
     Download a file from a given URL and save it to a specified filename.
     :param url: The URL of the file to download.
     :param filename: The name of the file to save the downloaded content to.
+    :param unzip: If True, unzip the file after download and remove the archive.
+    :param overwrite: If True, overwrite the file if it already exists.
+    :param chunk_size: The size of chunks to download (used by older implementation).
+    :return: The directory name where the file is saved, or None on failure.
     """
     dirname = os.path.dirname(filename)
-    if not os.path.exists(dirname):
-        os.makedirs(dirname)
+    os.makedirs(dirname, exist_ok=True)
 
-    if os.path.exists(filename) and not overwrite:
+    if not os.path.exists(filename) or overwrite:
+        print(f"Downloading {url} to {filename}")
+        try:
+            with urllib.request.urlopen(url) as response, open(filename, 'wb') as out_file:
+                shutil.copyfileobj(response, out_file)
+            print(f"✅ Download complete: {filename}")
+        except (urllib.error.URLError, IOError) as e:
+            print(f"❌ Error downloading file: {e}")
+            if os.path.exists(filename):
+                os.remove(filename)  # remove partial file
+            return None
+    else:
         print("File already downloaded to:", filename)
-        return
-
-    # download file using urlib and stream mode
-    try:
-        with urllib.request.urlopen(url) as response, open(filename, 'wb') as out_file:
-            while True:
-                chunk = response.read(chunk_size)
-                if not chunk:
-                    break
-                out_file.write(chunk)
-        print(f"✅ Download complete: {filename}")
-    except Exception as e:
-        print(f"❌ Error downloading file: {e}")
 
     if unzip:
-        with zipfile.ZipFile(filename, "r") as zip_ref:
-            zip_ref.extractall(dirname)
-        os.remove(filename)
+        print(f"Unzipping {filename}")
+        try:
+            with zipfile.ZipFile(filename, "r") as zip_ref:
+                zip_ref.extractall(dirname)
+            os.remove(filename)
+            print(f"✅ Unzipped to: {dirname}")
+        except (zipfile.BadZipFile, FileNotFoundError) as e:
+            print(f"❌ Error unzipping file: {e}")
+            return None
 
     return dirname
