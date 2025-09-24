@@ -12,6 +12,8 @@ from bs4 import BeautifulSoup
 import datetime
 
 BASE_URL = "/data-science-case-studies"
+TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
+
 
 def clear_outputs(nb):
     for cell in nb.cells:
@@ -28,11 +30,17 @@ def convert_notebook(nb_path: Path, out_path: Path, clear_output: bool = False):
         nb = clear_outputs(nb)
     c = Config()
     # single-file HTML (inlines attachments/resources)
+    # c.TemplateExporter.template_path.append(TEMPLATE_DIR)
+    c.TemplateExporter.template_file = os.path.join(TEMPLATE_DIR, "notebook.j2")
     c.HTMLExporter.embed_images = True
     c.HTMLExporter.exclude_input = False  # change True to hide code cells
     exporter = HTMLExporter(config=c)
-    body, resources = exporter.from_notebook_node(nb)
+    exporter.environment.globals = env.globals
+
+    body, _ = exporter.from_notebook_node(nb)
     out_path.parent.mkdir(parents=True, exist_ok=True)
+    
+
     with out_path.open("w", encoding="utf-8") as f:
         f.write(body)
     return out_path
@@ -84,7 +92,7 @@ def breadcrumb_builder(path: str, navlinks: dict):
 
 
 if __name__ == "__main__":
-    env = Environment(loader=FileSystemLoader("templates"))
+    env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     env.globals["url_for"] = url_for
     env.globals["year"] = datetime.datetime.now().year
     env.globals["base_url"] = BASE_URL
@@ -140,7 +148,9 @@ if __name__ == "__main__":
                     html = markdown.markdown(md)
                     html = html.replace(".ipynb", ".html")
                     title = get_title(html)
-                    html = markdown_template.render(body=html, title=title, breadcrumbs=breadcrumb_path)
+                    html = markdown_template.render(
+                        body=html, title=title, breadcrumbs=breadcrumb_path
+                    )
 
                 html_path.parent.mkdir(parents=True, exist_ok=True)
                 with html_path.open("w", encoding="utf-8") as f:
