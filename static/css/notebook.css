@@ -1,0 +1,134 @@
+/* Force rendering true colors when outputing to pdf */
+:root {
+    --jp-code-padding: 5px;
+    --jp-code-font-size: 12px;
+    --jp-code-font-family: "Fira Code", var(--jp-code-font-family-default);
+}
+
+.jp-Notebook[data-jp-theme-light="true"] {
+    --jp-layout-color0: white;
+    --jp-layout-color1: white;
+    --jp-layout-color2: var(--md-grey-200);
+    --jp-layout-color3: var(--md-grey-400);
+    --jp-layout-color4: var(--md-grey-600);
+    --jp-inverse-layout-color0: #111;
+    --jp-inverse-layout-color1: var(--md-grey-900);
+    --jp-inverse-layout-color2: var(--md-grey-800);
+    --jp-inverse-layout-color3: var(--md-grey-700);
+    --jp-inverse-layout-color4: var(--md-grey-600);
+    --jp-ui-font-color0: rgba(0, 0, 0, 1);
+    --jp-ui-font-color1: rgba(0, 0, 0, 0.87);
+    --jp-ui-font-color2: rgba(0, 0, 0, 0.54);
+    --jp-ui-font-color3: rgba(0, 0, 0, 0.38);
+    --jp-ui-inverse-font-color0: rgba(255, 255, 255, 1);
+    --jp-ui-inverse-font-color1: rgba(255, 255, 255, 1);
+    --jp-ui-inverse-font-color2: rgba(255, 255, 255, 0.7);
+    --jp-ui-inverse-font-color3: rgba(255, 255, 255, 0.5);
+    --jp-content-font-color0: rgba(0, 0, 0, 1);
+    --jp-content-font-color1: rgba(0, 0, 0, 0.87);
+    --jp-content-font-color2: rgba(0, 0, 0, 0.54);
+    --jp-content-font-color3: rgba(0, 0, 0, 0.38);
+    --jp-border-color0: var(--md-grey-400);
+    --jp-border-color1: var(--md-grey-400);
+    --jp-border-color2: var(--md-grey-300);
+    --jp-border-color3: var(--md-grey-200);
+    --jp-inverse-border-color: var(--md-grey-600);
+    --jp-rendermime-error-background: #fdd;
+    --jp-rendermime-table-row-background: var(--md-grey-100);
+    --jp-rendermime-table-row-hover-background: var(--md-light-blue-50);
+}
+
+/* Themes */
+.jp-Notebook[data-theme="dracula"] {
+    --jp-cell-editor-background: #282a36;
+    --jp-cell-editor-border-color: #44475a;
+    --jp-mirror-editor-keyword-color: #ff79c6;
+    --jp-mirror-editor-atom-color: #bd93f9;
+    --jp-mirror-editor-number-color: #bd93f9;
+    --jp-mirror-editor-def-color: #50fa7b;
+    --jp-mirror-editor-variable-color: #f8f8f2;
+    --jp-mirror-editor-variable-2-color: #8be9fd;
+    --jp-mirror-editor-variable-3-color: #ffb86c;
+    --jp-mirror-editor-punctuation-color: #f8f8f2;
+    --jp-mirror-editor-property-color: #66d9ef;
+    --jp-mirror-editor-operator-color: #ff79c6;
+    --jp-mirror-editor-comment-color: #6272a4;
+    --jp-mirror-editor-string-color: #f1fa8c;
+    --jp-mirror-editor-string-2-color: #f1fa8c;
+    --jp-mirror-editor-meta-color: #ff79c6;
+    --jp-mirror-editor-qualifier-color: #8be9fd;
+    --jp-mirror-editor-builtin-color: #8be9fd;
+    --jp-mirror-editor-bracket-color: #f8f8f2;
+    --jp-mirror-editor-tag-color: #ff79c6;
+    --jp-mirror-editor-attribute-color: #50fa7b;
+    --jp-mirror-editor-header-color: #ff5555;
+    --jp-mirror-editor-quote-color: #f1fa8c;
+    --jp-mirror-editor-link-color: #8be9fd;
+    --jp-mirror-editor-error-color: #ff5555;
+    --jp-mirror-editor-hr-color: #44475a;
+}
+
+.jp-Notebook[data-theme="github-dark"] {
+    --jp-cell-editor-background: #0d1117;
+    --jp-cell-editor-border-color: #30363d;
+    --jp-mirror-editor-keyword-color: #ff7b72;
+    --jp-mirror-editor-atom-color: #d2a8ff;
+    --jp-mirror-editor-number-color: #a5d6ff;
+    --jp-mirror-editor-def-color: #79c0ff;
+    --jp-mirror-editor-variable-color: #c9d1d9;
+    --jp-mirror-editor-variable-2-color: #ffa657;
+    --jp-mirror-editor-variable-3-color: #7ee787;
+    --jp-mirror-editor-punctuation-color: #c9d1d9;
+    --jp-mirror-editor-property-color: #79c0ff;
+    --jp-mirror-editor-operator-color: #ff7b72;
+    --jp-mirror-editor-comment-color: #8b949e;
+    --jp-mirror-editor-string-color: #a5d6ff;
+    --jp-mirror-editor-string-2-color: #79c0ff;
+    --jp-mirror-editor-meta-color: #d2a8ff;
+    --jp-mirror-editor-qualifier-color: #7ee787;
+    --jp-mirror-editor-builtin-color: #ffa657;
+    --jp-mirror-editor-bracket-color: #c9d1d9;
+    --jp-mirror-editor-tag-color: #7ee787;
+    --jp-mirror-editor-attribute-color: #d2a8ff;
+    --jp-mirror-editor-header-color: #1f6feb;
+    --jp-mirror-editor-quote-color: #a5d6ff;
+    --jp-mirror-editor-link-color: #58a6ff;
+    --jp-mirror-editor-error-color: #f85149;
+    --jp-mirror-editor-hr-color: #30363d;
+}
+.jp-Notebook[data-theme="github-light"] {
+    --jp-cell-editor-background: #ffffff;
+    --jp-cell-editor-border-color: #d0d7de;
+    --jp-mirror-editor-keyword-color: #cf222e;
+    --jp-mirror-editor-atom-color: #8250df;
+    --jp-mirror-editor-number-color: #0550ae;
+    --jp-mirror-editor-def-color: #0a3069;
+    --jp-mirror-editor-variable-color: #24292f;
+    --jp-mirror-editor-variable-2-color: #953800;
+    --jp-mirror-editor-variable-3-color: #116329;
+    --jp-mirror-editor-punctuation-color: #24292f;
+    --jp-mirror-editor-property-color: #0a3069;
+    --jp-mirror-editor-operator-color: #cf222e;
+    --jp-mirror-editor-comment-color: #6e7781;
+    --jp-mirror-editor-string-color: #0a3069;
+    --jp-mirror-editor-string-2-color: #0550ae;
+    --jp-mirror-editor-meta-color: #8250df;
+    --jp-mirror-editor-qualifier-color: #116329;
+    --jp-mirror-editor-builtin-color: #8250df;
+    --jp-mirror-editor-bracket-color: #24292f;
+    --jp-mirror-editor-tag-color: #116329;
+    --jp-mirror-editor-attribute-color: #0a3069;
+    --jp-mirror-editor-header-color: #0550ae;
+    --jp-mirror-editor-quote-color: #0a3069;
+    --jp-mirror-editor-link-color: #0969da;
+    --jp-mirror-editor-error-color: #cf222e;
+    --jp-mirror-editor-hr-color: #d0d7de;
+}
+
+/* Theme Select */
+.theme-selector {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
