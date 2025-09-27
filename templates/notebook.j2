@@ -12,6 +12,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% set nb_title = nb.metadata.get('title', resources['metadata']['name']) | escape_html_keep_quotes %}
 <title>{{nb_title}}</title>
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
 
 {%- block html_head_js -%}
 {%- block html_head_js_requirejs -%}
@@ -35,77 +43,19 @@
 {% endfor %}
 
 {% block notebook_css %}
-{# {{ resources.include_css("static/index.css") }}
+{{ resources.include_css("static/index.css") }}
+{{ resources.include_css("static/theme-dark.css") }}
+{# 
 {% if resources.theme == 'dark' %}
-    {{ resources.include_css("static/theme-dark.css") }}
 {% elif resources.theme == 'light'  %}
-    {{ resources.include_css("static/theme-light.css") }}
+{{ resources.include_css("static/theme-light.css") }}
 {% else %}
     {{ resources.include_lab_theme(resources.theme) }}
 {% endif %} #}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{# <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> #}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}">
-<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
-<style type="text/css">
-/* Force rendering true colors when outputing to pdf */
-* {
-  -webkit-print-color-adjust: exact;
-}
-
-/* Misc */
-a.anchor-link {
-  display: none;
-}
-
-/* Input area styling */
-.jp-InputArea {
-  overflow: hidden;
-}
-
-.jp-InputArea-editor {
-  overflow: hidden;
-}
-
-.cm-editor.cm-s-jupyter .highlight pre {
-/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.cm-line */
-  padding: var(--jp-code-padding) 4px;
-  margin: 0;
-
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
-
-}
-
-.jp-OutputArea-output pre {
-  line-height: inherit;
-  font-family: inherit;
-}
-
-.jp-RenderedText pre {
-  color: var(--jp-content-font-color1);
-  font-size: var(--jp-code-font-size);
-}
-
-/* Hiding the collapser by default */
-.jp-Collapser {
-  display: none;
-}
-
-@page {
-    margin: 0.5in; /* Margin for each printed piece of paper */
-}
-
-@media print {
-  .jp-Cell-inputWrapper,
-  .jp-Cell-outputWrapper {
-    display: block;
-  }
-}
-</style>
-
+<script type="text/javascript" defer src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock notebook_css %}
 
 {%- block html_head_js_mathjax -%}

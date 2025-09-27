@@ -1,216 +1,134 @@
+/* Force rendering true colors when outputing to pdf */
 :root {
-  /* Color palette (edit these variables to customize) */
-  --bg: #0f1724;               /* main background */
-  --surface: #111827;          /* notebook surface / cell background */
-  --muted-surface: #0b1220;    /* subtle alternate surface */
-  --panel: #0b1220;            /* sidebar / toolbar background */
-  --text: #e6eef8;             /* primary text color */
-  --muted-text: #9aa7bb;       /* secondary text / comments */
-  --accent: #3fb0ff;           /* primary accent (links, buttons) */
-  --accent-2: #7c6cff;         /* secondary accent */
-  --success: #40c057;
-  --danger: #ff6b6b;
-  --code-bg: #071029;          /* code cell background */
-  --code-border: #1f2a3a;      /* code cell border */
-  --selection: rgba(63,176,255,0.14);
-  --caret: #ffffff;
-  --output-bg: #071125;        /* output area background */
-  --cell-shadow: rgba(0,0,0,0.45);
-  --table-border: #22303f;
-  --hr: #1b2734;
+    --jp-code-padding: 5px;
+    --jp-code-font-size: 12px;
+    --jp-code-font-family: "Fira Code", var(--jp-code-font-family-default);
 }
 
-/* Overall page background & main container */
-body, .container {
-  background-color: var(--bg) !important;
-  color: var(--text) !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+.jp-Notebook[data-jp-theme-light="true"] {
+    --jp-layout-color0: white;
+    --jp-layout-color1: white;
+    --jp-layout-color2: var(--md-grey-200);
+    --jp-layout-color3: var(--md-grey-400);
+    --jp-layout-color4: var(--md-grey-600);
+    --jp-inverse-layout-color0: #111;
+    --jp-inverse-layout-color1: var(--md-grey-900);
+    --jp-inverse-layout-color2: var(--md-grey-800);
+    --jp-inverse-layout-color3: var(--md-grey-700);
+    --jp-inverse-layout-color4: var(--md-grey-600);
+    --jp-ui-font-color0: rgba(0, 0, 0, 1);
+    --jp-ui-font-color1: rgba(0, 0, 0, 0.87);
+    --jp-ui-font-color2: rgba(0, 0, 0, 0.54);
+    --jp-ui-font-color3: rgba(0, 0, 0, 0.38);
+    --jp-ui-inverse-font-color0: rgba(255, 255, 255, 1);
+    --jp-ui-inverse-font-color1: rgba(255, 255, 255, 1);
+    --jp-ui-inverse-font-color2: rgba(255, 255, 255, 0.7);
+    --jp-ui-inverse-font-color3: rgba(255, 255, 255, 0.5);
+    --jp-content-font-color0: rgba(0, 0, 0, 1);
+    --jp-content-font-color1: rgba(0, 0, 0, 0.87);
+    --jp-content-font-color2: rgba(0, 0, 0, 0.54);
+    --jp-content-font-color3: rgba(0, 0, 0, 0.38);
+    --jp-border-color0: var(--md-grey-400);
+    --jp-border-color1: var(--md-grey-400);
+    --jp-border-color2: var(--md-grey-300);
+    --jp-border-color3: var(--md-grey-200);
+    --jp-inverse-border-color: var(--md-grey-600);
+    --jp-rendermime-error-background: #fdd;
+    --jp-rendermime-table-row-background: var(--md-grey-100);
+    --jp-rendermime-table-row-hover-background: var(--md-light-blue-50);
 }
 
-/* Notebook toolbar / header */
-#header, .navbar, .navbar-inner, .toolbar, .container .header {
-  background-color: var(--panel) !important;
-  color: var(--text) !important;
-  border-bottom: 1px solid var(--hr) !important;
+/* Themes */
+.jp-Notebook[data-theme="dracula"] {
+    --jp-cell-editor-background: #282a36;
+    --jp-cell-editor-border-color: #44475a;
+    --jp-mirror-editor-keyword-color: #ff79c6;
+    --jp-mirror-editor-atom-color: #bd93f9;
+    --jp-mirror-editor-number-color: #bd93f9;
+    --jp-mirror-editor-def-color: #50fa7b;
+    --jp-mirror-editor-variable-color: #f8f8f2;
+    --jp-mirror-editor-variable-2-color: #8be9fd;
+    --jp-mirror-editor-variable-3-color: #ffb86c;
+    --jp-mirror-editor-punctuation-color: #f8f8f2;
+    --jp-mirror-editor-property-color: #66d9ef;
+    --jp-mirror-editor-operator-color: #ff79c6;
+    --jp-mirror-editor-comment-color: #6272a4;
+    --jp-mirror-editor-string-color: #f1fa8c;
+    --jp-mirror-editor-string-2-color: #f1fa8c;
+    --jp-mirror-editor-meta-color: #ff79c6;
+    --jp-mirror-editor-qualifier-color: #8be9fd;
+    --jp-mirror-editor-builtin-color: #8be9fd;
+    --jp-mirror-editor-bracket-color: #f8f8f2;
+    --jp-mirror-editor-tag-color: #ff79c6;
+    --jp-mirror-editor-attribute-color: #50fa7b;
+    --jp-mirror-editor-header-color: #ff5555;
+    --jp-mirror-editor-quote-color: #f1fa8c;
+    --jp-mirror-editor-link-color: #8be9fd;
+    --jp-mirror-editor-error-color: #ff5555;
+    --jp-mirror-editor-hr-color: #44475a;
 }
 
-/* Notebook cells area */
-#notebook, .notebook_app, .cell {
-  background-color: transparent !important;
+.jp-Notebook[data-theme="github-dark"] {
+    --jp-cell-editor-background: #0d1117;
+    --jp-cell-editor-border-color: #30363d;
+    --jp-mirror-editor-keyword-color: #ff7b72;
+    --jp-mirror-editor-atom-color: #d2a8ff;
+    --jp-mirror-editor-number-color: #a5d6ff;
+    --jp-mirror-editor-def-color: #79c0ff;
+    --jp-mirror-editor-variable-color: #c9d1d9;
+    --jp-mirror-editor-variable-2-color: #ffa657;
+    --jp-mirror-editor-variable-3-color: #7ee787;
+    --jp-mirror-editor-punctuation-color: #c9d1d9;
+    --jp-mirror-editor-property-color: #79c0ff;
+    --jp-mirror-editor-operator-color: #ff7b72;
+    --jp-mirror-editor-comment-color: #8b949e;
+    --jp-mirror-editor-string-color: #a5d6ff;
+    --jp-mirror-editor-string-2-color: #79c0ff;
+    --jp-mirror-editor-meta-color: #d2a8ff;
+    --jp-mirror-editor-qualifier-color: #7ee787;
+    --jp-mirror-editor-builtin-color: #ffa657;
+    --jp-mirror-editor-bracket-color: #c9d1d9;
+    --jp-mirror-editor-tag-color: #7ee787;
+    --jp-mirror-editor-attribute-color: #d2a8ff;
+    --jp-mirror-editor-header-color: #1f6feb;
+    --jp-mirror-editor-quote-color: #a5d6ff;
+    --jp-mirror-editor-link-color: #58a6ff;
+    --jp-mirror-editor-error-color: #f85149;
+    --jp-mirror-editor-hr-color: #30363d;
+}
+.jp-Notebook[data-theme="github-light"] {
+    --jp-cell-editor-background: #ffffff;
+    --jp-cell-editor-border-color: #d0d7de;
+    --jp-mirror-editor-keyword-color: #cf222e;
+    --jp-mirror-editor-atom-color: #8250df;
+    --jp-mirror-editor-number-color: #0550ae;
+    --jp-mirror-editor-def-color: #0a3069;
+    --jp-mirror-editor-variable-color: #24292f;
+    --jp-mirror-editor-variable-2-color: #953800;
+    --jp-mirror-editor-variable-3-color: #116329;
+    --jp-mirror-editor-punctuation-color: #24292f;
+    --jp-mirror-editor-property-color: #0a3069;
+    --jp-mirror-editor-operator-color: #cf222e;
+    --jp-mirror-editor-comment-color: #6e7781;
+    --jp-mirror-editor-string-color: #0a3069;
+    --jp-mirror-editor-string-2-color: #0550ae;
+    --jp-mirror-editor-meta-color: #8250df;
+    --jp-mirror-editor-qualifier-color: #116329;
+    --jp-mirror-editor-builtin-color: #8250df;
+    --jp-mirror-editor-bracket-color: #24292f;
+    --jp-mirror-editor-tag-color: #116329;
+    --jp-mirror-editor-attribute-color: #0a3069;
+    --jp-mirror-editor-header-color: #0550ae;
+    --jp-mirror-editor-quote-color: #0a3069;
+    --jp-mirror-editor-link-color: #0969da;
+    --jp-mirror-editor-error-color: #cf222e;
+    --jp-mirror-editor-hr-color: #d0d7de;
 }
 
-/* Individual cells (unselected) */
-div.cell {
-  background-color: transparent;
-  box-shadow: none;
-}
-
-/* Code cells */
-div.code_cell {
-  background-color: var(--code-bg) !important;
-  border: 1px solid var(--code-border) !important;
-  border-radius: 8px;
-  padding: 8px 10px;
-  margin: 8px 0;
-  box-shadow: 0 6px 18px var(--cell-shadow);
-}
-
-/* Selected / active cell */
-div.cell.selected, div.code_cell.focused {
-  outline: 2px solid var(--selection) !important;
-  background-image: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-}
-
-/* Input prompt (In [ ]) */
-div.input_prompt, .prompt {
-  color: var(--muted-text) !important;
-}
-
-/* Code font & color */
-div.input_area pre, .CodeMirror, .CodeMirror-lines {
-  color: var(--text) !important;
-  background: transparent !important;
-  caret-color: var(--caret) !important;
-  font-family: Menlo, Monaco, "Courier New", monospace;
-  font-size: 13px;
-}
-
-/* CodeMirror gutters and cursor */
-.CodeMirror-gutters {
-  background: transparent !important;
-  border-right: 1px solid var(--code-border) !important;
-  color: var(--muted-text) !important;
-}
-.CodeMirror-cursor {
-  border-left: 2px solid var(--caret) !important;
-}
-
-/* Output area styling */
-div.output {
-  background-color: var(--output-bg) !important;
-  border: 1px solid var(--code-border) !important;
-  border-radius: 6px;
-  padding: 8px 10px;
-  margin-top: 6px;
-  color: var(--text) !important;
-}
-
-/* Stream & error text */
-div.output_stderr {
-  color: var(--danger) !important;
-  background: transparent !important;
-}
-div.output_stdout {
-  color: var(--text) !important;
-}
-
-/* Markdown rendering */
-.rendered_html, .text_cell_render {
-  color: var(--text) !important;
-  background: transparent !important;
-}
-.rendered_html h1, .rendered_html h2, .rendered_html h3, .rendered_html h4 {
-  color: var(--accent) !important;
-  margin-top: 0.6em;
-}
-.rendered_html em, .rendered_html i {
-  color: var(--muted-text) !important;
-}
-
-/* Links */
-a, .rendered_html a {
-  color: var(--accent) !important;
-  text-decoration: none;
-}
-a:hover, .rendered_html a:hover {
-  text-decoration: underline;
-}
-
-/* Tables */
-table.dataframe {
-  background: transparent !important;
-  border-collapse: collapse;
-  color: var(--text) !important;
-}
-table.dataframe th, table.dataframe td {
-  border: 1px solid var(--table-border) !important;
-  padding: 6px 10px;
-}
-
-/* Notebook list / file browser */
-#notebook_list, .list_item, .list_container {
-  background-color: var(--surface) !important;
-  color: var(--text) !important;
-}
-#notebook_list .item_link {
-  color: var(--text) !important;
-}
-
-/* Toolbar buttons and icons */
-.btn, .btn-default, .btn-group .btn {
-  background-color: transparent !important;
-  color: var(--text) !important;
-  border: 1px solid transparent !important;
-}
-.btn:hover {
-  background-color: rgba(255,255,255,0.02) !important;
-  border-color: var(--hr) !important;
-}
-
-/* Active toolbar/action accents */
-.btn-primary, .navbar .btn {
-  background-color: var(--accent) !important;
-  color: #071029 !important;
-  border-color: transparent !important;
-}
-
-/* Prompts, tags and metadata */
-div.output_prompt, .output_subarea, .prompt {
-  color: var(--muted-text) !important;
-}
-
-/* Horizontal rules */
-hr {
-  border: none;
-  border-top: 1px solid var(--hr) !important;
-  margin: 0.8em 0;
-}
-
-/* Notebook cell headings / headings in toolbar */
-h1, h2, h3 {
-  color: var(--text) !important;
-}
-
-/* Scrollbars (WebKit) */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.06);
-  border-radius: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Floating outputs like images/plots */
-.output_png, .output_image, .output_jpeg {
-  background-color: transparent !important;
-  border: none !important;
-  padding: 6px 0;
-}
-
-/* Notebook cell toolbar (if using extensions) */
-.celltoolbar {
-  background: rgba(255,255,255,0.02) !important;
-  color: var(--muted-text) !important;
-}
-
-/* Small screens: reduce padding so content fits */
-@media (max-width: 720px) {
-  div.code_cell, div.output {
-    padding: 6px 8px;
-    margin: 6px 0;
-  }
+/* Theme Select */
+.theme-selector {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
 }
