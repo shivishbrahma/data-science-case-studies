@@ -12,4 +12,4 @@ USDA Food Database, Version 1. Retrieved September 21, 2025 from [https://ndb.na
 
 ## Notebooks
 
-* [Data Analysis from O&#39; Reilly Book](./01_pydata_analysis_notebook.ipynb)
+* [Data Analysis from O'Reilly Book](./01_pydata_analysis_notebook.ipynb)
