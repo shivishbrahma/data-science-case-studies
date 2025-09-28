@@ -8,3 +8,5 @@ Collections of Jupyter Notebooks for Data Science Case Studies
 - [Bit.ly from 1.USA.gov](./bitly-usagov)
 - [MovieLens 1M Dataset](./movielens-1m-ds)
 - [US Baby Names](./us-baby-names)
+- [USDA Food Database](./usda-food-database)
+- [2012 Federal Election Commission](./federal-election-commission-2012)
