@@ -12,4 +12,4 @@ Wes McKinney. (November 15, 2017). "2012 Federal Election Commission Database", 
 
 ## Notebooks
 
-* [Data Analysis from O&#39; Reilly Book](./01_pydata_analysis_notebook.ipynb)
+* [Data Analysis from O'Reilly Book](./01_pydata_analysis_notebook.ipynb)
