@@ -10,3 +10,5 @@ Collections of Jupyter Notebooks for Data Science Case Studies
 - [US Baby Names](./us-baby-names)
 - [USDA Food Database](./usda-food-database)
 - [2012 Federal Election Commission](./federal-election-commission-2012)
+
+- [Ecommerce Text Classification](./ecommerce-text-classification)
