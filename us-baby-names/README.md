@@ -11,7 +11,7 @@ record in the individual annual files has the format "name,sex,number," where na
 sex is M (male) or F (female) and "number" is the number of occurrences of the name. Each file is sorted
 first on sex and then on number of occurrences in descending order. When there is a tie on the number of
 occurrences, names are listed in alphabetical order. This sorting makes it easy to determine a name's rank.
-The first record for each sex has rank 1, the second record for each sex has rank 2, and so forth.  
+The first record for each sex has rank 1, the second record for each sex has rank 2, and so forth.
 
 ### Citation
 
@@ -19,4 +19,4 @@ US Baby Names 1880-2024, Version 1. Retrieved September 21, 2025 from [https://w
 
 ## Notebooks
 
-* [Data Analysis from O&#39; Reilly Book](./01_pydata_analysis_notebook.ipynb)
+* [Data Analysis from O' Reilly Book](./01_pydata_analysis_notebook.ipynb)
