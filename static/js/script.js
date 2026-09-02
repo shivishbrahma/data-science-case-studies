@@ -5,17 +5,17 @@ const THEMES = [
 ]
 
 function setTheme(theme, select) {
-    const nbkEle = document.querySelector(".jp-Notebook");
+    const bodyEle = document.querySelector("body");
     const themeData = THEMES.find((themeData) => themeData.value === theme);
-    nbkEle.setAttribute("data-theme", themeData.value);
-    nbkEle.setAttribute("data-jp-theme-light", themeData.is_light ? "true" : "false");
+    bodyEle.setAttribute("data-theme", themeData.value);
+    bodyEle.setAttribute("data-jp-theme-light", themeData.is_light ? "true" : "false");
     console.log("Theme changed to " + theme);
     if(select.value === theme) return;
     select.value = theme;
 }
 
 (() => {
-    const headerElement = document.querySelector("#jp-Notebook-header .navbar");
+    const headerElement = document.querySelector("header .navbar");
 
     console.log("Notebook Script loaded successfully.");
     // Create a select element for themes

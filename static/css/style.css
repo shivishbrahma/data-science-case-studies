@@ -33,17 +33,15 @@ body {
 }
 
 /* dark theme */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #0d1117;
-        --surface: #1c222a;
-        --muted: #8b949e;
-        --text: #c9d1d9;
-        --accent: #58a6ff;
-        /* GitHub dark accent */
-        --border: #30363d;
-        --code-bg: #0b1220;
-    }
+:root:has(body[data-jp-theme-light="false"]) {
+    --bg: #0d1117;
+    --surface: #1c222a;
+    --muted: #8b949e;
+    --text: #c9d1d9;
+    --accent: #58a6ff;
+    /* GitHub dark accent */
+    --border: #30363d;
+    --code-bg: #0b1220;
 }
 
 body {
@@ -312,10 +310,12 @@ main {
 /* header */
 header .navbar {
     display: flex;
+    gap: 0.5rem;
     padding: 0.5rem 1.5rem;
     border-bottom: 1px solid var(--border);
     background: var(--surface);
 }
+
 header .navbar-brand {
     display: flex;
     align-items: center;
@@ -324,6 +324,7 @@ header .navbar-brand {
     text-decoration: none;
     color: var(--text);
 }
+
 header .navbar-brand img {
     width: 2rem;
     height: 2rem;
@@ -345,4 +346,8 @@ header .breadcrumb a::after {
 
 header .breadcrumb a:last-child::after {
     display: none;
+}
+
+.theme-selector{
+    margin-left: auto;
 }
