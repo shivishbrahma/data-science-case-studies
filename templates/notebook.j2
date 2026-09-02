@@ -68,6 +68,12 @@
 {%- block body_header -%}
 <body class="jp-Notebook">
 <header id="jp-Notebook-header">
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="{{ url_for('static', filename='images/icon.png') }}" class="navbar-logo"></>
+            <span class="navbar-brand-text">DS Casebook</span>
+        </div>
+    </nav>
     <nav class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
         <a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a>

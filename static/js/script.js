@@ -15,7 +15,7 @@ function setTheme(theme, select) {
 }
 
 (() => {
-    const headerElement = document.querySelector("#jp-Notebook-header");
+    const headerElement = document.querySelector("#jp-Notebook-header .navbar");
 
     console.log("Notebook Script loaded successfully.");
     // Create a select element for themes
