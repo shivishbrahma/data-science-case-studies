@@ -287,12 +287,12 @@ header {
     background: var(--surface);
 }
 
-nav a::after {
+.breadcrumb a::after {
     content: " > ";
     display: inline-block;
     width: 0.5rem;
 }
 
-nav a:last-child::after {
+.breadcrumb a:last-child::after {
     display: none;
 }

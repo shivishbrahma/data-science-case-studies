@@ -10,6 +10,7 @@ import shutil
 from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
 import datetime
+from argparse import ArgumentParser
 
 BASE_URL = "/data-science-case-studies"
 TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
@@ -23,7 +24,9 @@ def clear_outputs(nb):
     return nb
 
 
-def convert_notebook(nb_path: Path, out_path: Path, clear_output: bool = False):
+def convert_notebook(
+    nb_path: Path, out_path: Path, clear_output: bool = False, variables: dict = {}
+):
     with nb_path.open("r", encoding="utf-8") as f:
         nb = read(f, as_version=NO_CONVERT)
     if clear_output:
@@ -37,9 +40,11 @@ def convert_notebook(nb_path: Path, out_path: Path, clear_output: bool = False):
     exporter = HTMLExporter(config=c)
     exporter.environment.globals = env.globals
 
+    for key, value in variables.items():
+        exporter.environment.globals[key] = value
+
     body, _ = exporter.from_notebook_node(nb)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    
 
     with out_path.open("w", encoding="utf-8") as f:
         f.write(body)
@@ -80,8 +85,17 @@ def url_for(endpoint, **params):
 def breadcrumb_builder(path: str, navlinks: dict):
     breadcrumbs = []
     cur_path = ""
-    for part in path.split(os.sep):
-        cur_path += f"{part}/".replace(".", "")
+    # print(f"Building breadcrumbs for path: {path}")
+    # print(f"navlinks: {navlinks}")
+    parts = path.rstrip("/").split("/")
+    for part in parts:
+        if part == "." or part == "..":
+            continue
+        if part.find(".") != -1:
+            cur_path += f"{part}"
+        else:
+            cur_path += f"{part}/"
+        # print(f"Current path: {cur_path}")
         breadcrumbs.append(
             {
                 "url": BASE_URL.rstrip("/") + cur_path,
@@ -92,6 +106,24 @@ def breadcrumb_builder(path: str, navlinks: dict):
 
 
 if __name__ == "__main__":
+    parser = ArgumentParser(description="Build the project")
+    parser.add_argument(
+        "--clear-output",
+        action="store_true",
+        help="Clear notebook outputs",
+        default=False,
+    )
+    parser.add_argument(
+        "--dev",
+        action="store_true",
+        help="Development mode (no clear output)",
+        default=False,
+    )
+    args = parser.parse_args()
+
+    if args.dev:
+        BASE_URL = ""
+
     env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     env.globals["url_for"] = url_for
     env.globals["year"] = datetime.datetime.now().year
@@ -110,18 +142,36 @@ if __name__ == "__main__":
 
     # Iterate recursively over project directory
     for root, _, filenames in os.walk("."):
+        # pull index.md or README.md files to the top of the list
+        filenames.sort(key=lambda x: (x != "index.md" and x != "README.md", x))
         for filename in filenames:
             if filename.endswith(".ipynb") and ".ipynb_checkpoints" not in root:
+                nav_name = (filename.replace(".ipynb", "").replace("-", " ").title())[
+                    :15
+                ] + "..."
+                nav_link = (
+                    root.replace(".", "").replace(os.sep, "/")
+                    + "/"
+                    + filename.replace(".ipynb", ".html")
+                )
+                navlinks[nav_link] = nav_name
+                breadcrumb_path = breadcrumb_builder(nav_link, navlinks)
+                # print(breadcrumb_path)
                 print(f"Converting {filename}...")
                 nb_path = Path(os.path.join(root, filename))
                 out_path = Path(os.path.join("build", nb_path.with_suffix(".html")))
-                convert_notebook(nb_path, out_path)
+                convert_notebook(
+                    nb_path,
+                    out_path,
+                    clear_output=args.clear_output,
+                    variables={"breadcrumbs": breadcrumb_path},
+                )
                 print(f"Converted {filename} to {out_path}")
             elif filename.endswith(".md"):
                 print(f"Converting {filename}...")
 
                 md_path = Path(os.path.join(root, filename))
-                if filename == "README.md":
+                if filename == "README.md" or filename == "index.md":
                     if root == ".":
                         nav_name = "Home"
                         nav_link = "/"
@@ -133,10 +183,12 @@ if __name__ == "__main__":
                             .replace("-", " ")
                             .title()
                         )[:15] + "..."
-                        nav_link = root.replace(".", "").replace(os.sep, "/") + "/"
+                        nav_link = (
+                            root.replace(".", "").replace(os.sep, "/") + "/"
+                        )
 
                     navlinks[nav_link] = nav_name
-                    breadcrumb_path = breadcrumb_builder(root, navlinks)
+                    breadcrumb_path = breadcrumb_builder(nav_link, navlinks)
 
                     html_path = Path(os.path.join("build", root, "index.html"))
                 else:

@@ -45,15 +45,7 @@
 {% block notebook_css %}
 {{ resources.include_css("static/index.css") }}
 {{ resources.include_css("static/theme-dark.css") }}
-{# 
-{% if resources.theme == 'dark' %}
-{% elif resources.theme == 'light'  %}
-{{ resources.include_css("static/theme-light.css") }}
-{% else %}
-    {{ resources.include_lab_theme(resources.theme) }}
-{% endif %} #}
 
-{# <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> #}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}">
 <script type="text/javascript" defer src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock notebook_css %}
@@ -74,13 +66,15 @@
 {%- endblock header -%}
 
 {%- block body_header -%}
-{# {% if resources.theme == 'dark' %}
-<body class="jp-Notebook" data-jp-theme-light="false" data-jp-theme-name="JupyterLab Dark">
-{% else %}
-<body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-{% endif %} #}
 <body class="jp-Notebook">
-<main>
+<header id="jp-Notebook-header">
+    <nav class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a>
+        {% endfor %}
+    </nav>
+</header>
+<main id="jp-Notebook-body">
 {%- endblock body_header -%}
 
 {% block body_footer %}

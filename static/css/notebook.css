@@ -96,6 +96,7 @@
     --jp-mirror-editor-error-color: #f85149;
     --jp-mirror-editor-hr-color: #30363d;
 }
+
 .jp-Notebook[data-theme="github-light"] {
     --jp-cell-editor-background: #ffffff;
     --jp-cell-editor-border-color: #d0d7de;
@@ -125,10 +126,51 @@
     --jp-mirror-editor-hr-color: #d0d7de;
 }
 
-/* Theme Select */
-.theme-selector {
+/* Notebook Header */
+#jp-Notebook-header {
+    display: flex;
+    align-items: center;
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 0;
+    left: 0;
     z-index: 1000;
+    padding: 0.5rem;
+    width: 100%;
+    height: 2.5rem;
+    border: 1px solid var(--jp-border-color1);
+    background: var(--jp-layout-color1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 0.5rem;
+}
+
+.breadcrumb a::after {
+    content: " > ";
+    display: inline-block;
+    width: 0.5rem;
+}
+
+.breadcrumb a:last-child::after {
+    display: none;
+}
+
+.theme-selector{
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+a {
+    color: var(--jp-mirror-editor-link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#jp-Notebook-body {
+    padding-top: 2.5rem;
+}
+
+.cm-editor {
+    overflow: auto;
 }
